@@ -5,14 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pe.com.siraywasi.dao.ColorDao;
 import pe.com.siraywasi.dao.EspecificacionPrendaDao;
-import pe.com.siraywasi.dao.PrendaDao;
-import pe.com.siraywasi.dao.TipoPrendaDao;
-import pe.com.siraywasi.dao.TipoTelaDao;
-import pe.com.siraywasi.model.Prenda;
-import pe.com.siraywasi.model.TipoPrenda;
-import pe.com.siraywasi.model.TipoTela;
+import pe.com.siraywasi.dao.TallaDao;
+import pe.com.siraywasi.model.Color;
 import pe.com.siraywasi.model.dto.EspecificacionPrendaDTO;
+import pe.com.siraywasi.model.dto.EspecificacionPrendaResumenDTO;
 import pe.com.siraywasi.service.EspecificacionPrendaService;
 
 @Service
@@ -22,13 +20,10 @@ public class EspecificacionPrendaServiceImpl implements EspecificacionPrendaServ
 	private EspecificacionPrendaDao especificacionPrendaDao; 
 	
 	@Autowired
-	private TipoTelaDao tipoTelaDao;
+	private TallaDao tallaDao;
 	
 	@Autowired
-	private PrendaDao prendaDao;
-	
-	@Autowired
-	private TipoPrendaDao tipoPrendaDao;
+	private ColorDao colorDao;
 	
 	@Override
 	public List<EspecificacionPrendaDTO> listadoEspecificacionPrenda() {
@@ -37,20 +32,20 @@ public class EspecificacionPrendaServiceImpl implements EspecificacionPrendaServ
 	}
 
 	@Override
-	public List<TipoTela> listadoTipoTela() {
-		List<TipoTela> listadoTipoTela = tipoTelaDao.listadoTipoTela(); 
-		return listadoTipoTela;
+	public String[] listadoTallas() {
+		String listadoTallas[] = tallaDao.listadoTallas();
+ 		return listadoTallas;
 	}
 
 	@Override
-	public List<Prenda> listadoPrenda() {
-		List<Prenda> listadoPrenda = prendaDao.listadoPrenda();
-		return listadoPrenda;
+	public List<EspecificacionPrendaResumenDTO> listadoEspecificacionPrendaResumen() {
+		List<EspecificacionPrendaResumenDTO> listadoEspecificacionPrendaResumen = especificacionPrendaDao.listadoEspecificacionPrendaResumen();
+		return listadoEspecificacionPrendaResumen;
 	}
 
 	@Override
-	public List<TipoPrenda> listadoTipoPrenda() {
-		List<TipoPrenda> listadoTipoPrenda = tipoPrendaDao.listadoTipoPrenda();
-		return listadoTipoPrenda;
+	public List<Color> listadoColor() {
+		List<Color> listadoColor = colorDao.listadoColor();
+		return listadoColor;
 	}
 }

@@ -88,9 +88,7 @@
 					</div>
 					<div class="form-group">
 						<div class="col-lg-4">
-							<button type="button" class="btn btn-info">Agregar
-								Imagen</button>
-							<br /> <br />
+							
 
 							<div class="checkbox">
 								<label> &nbsp;&nbsp;<form:checkbox
@@ -104,7 +102,11 @@
 										path="indicadorBordado" id="indicadorBordado" /> Bordado
 								</label>
 							</div>
-
+							<br />
+							<br />
+							<button type="button" class="btn btn-info">Agregar Imagen </button>
+							<br /><br />
+							<button type="button" class="btn btn-info">Guardar Imagen </button>
 						</div>
 						<div class="col-lg-8">
 							<img src="<c:url value="/resources/images/blanco.png" />"
@@ -121,7 +123,69 @@
 			<div class="panel panel-info">
 				<div class="panel-heading">Pedido</div>
 				<div class="panel-body">
+				
+					<div class="form-group">
+						<div class="col-lg-4">
+							<label class="control-label" for="tipoTalla">Tallas:</label>	
+						</div>
+						<div class="col-lg-8">
+							<div class="radio-inline">
+							  <label>
+							    <form:radiobutton path="tipoTalla" value="S" />Estandar
+							  </label>
+							</div>
+							<div class="radio-inline">
+							  <label>
+							    <form:radiobutton path="tipoTalla" value="N" /> Niños
+							  </label>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<div class="col-lg-4"></div>
+						<div class="col-lg-8">
+							<form:checkboxes items="${listaTallas}" path="tallas" />
+						</div>
+					</div>
 				</div>
+				
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-10">
+						<div class="panel panel-info">
+							<div class="panel-heading">Talla S</div>
+							
+							<div class="panel-body">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-1"></div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-10">
+						<div class="panel panel-info">
+							<div class="panel-heading">Talla M</div>
+							
+							<div class="panel-body">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-1"></div>
+				</div>
+				
+							
+				<div class="form-group">
+					<div class="col-lg-4"></div>
+					<div class="col-lg-4">
+						<button type="button" class="btn btn-info">Calcular Costo Aproximado </button>
+					</div>
+					<div class="col-lg-4"></div>
+				</div>									
 			</div>		
 		</div>
 		
@@ -130,6 +194,79 @@
 			<div class="panel panel-info">
 				<div class="panel-heading">Resumen Pedido</div>
 				<div class="panel-body">
+				
+				<h3>CASACA POLAR TS</h3>
+			
+				<div class="form-group">
+					<div class="col-lg-8">
+						<label> Fecha Probable de Entrega:	</label>
+					</div>
+					<div class="col-lg-4">
+						<label> 15/10/2014 </label>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="col-lg-4">
+						<label> Prenda:	</label>
+					</div>
+					<div class="col-lg-8">
+						<label> Casaca / Polar / Cuello Alto </label>
+					</div>
+				</div>
+			
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Talla</th>
+						<th>Tipo</th>													
+						<th>Color</th>
+						<th>Cantidad</th>
+					</tr>								
+				</thead>
+				<tbody>
+					<c:forEach var="item" items="${resumen}">
+						<tr>
+							<td>${item.talla}</td>
+							<td>${item.tipo}</td>
+							<td>${item.color}</td>
+							<td>${item.cantidad}</td>
+						</tr>								
+					</c:forEach>
+				</tbody>
+			</table>				
+
+
+				<div class="form-group">
+					<div class="col-lg-8">
+						<label> Total de Prendas:	</label>
+					</div>
+					<div class="col-lg-4">
+						<label> 2000 </label>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="col-lg-8">
+						<label> Costo Aproximado:	</label>
+					</div>
+					<div class="col-lg-4">
+						<label> S/. 6737.09 </label>
+					</div>
+				</div>
+				
+							<br />
+					<div class="form-group">
+						<div class="col-lg-4"></div>
+						<div class="col-lg-4">
+							<button type="button" class="btn btn-info">Solicitar Pedido </button>
+						</div>
+						<div class="col-lg-4"></div>
+					</div>							
+											
+				
 				</div>
 			</div>			
 		</div>

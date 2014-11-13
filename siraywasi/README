@@ -3,6 +3,12 @@ Desplegar la aplicacion:
 Links para desplegar:
 http://localhost:8080/siraywasi/especificacionprenda/listado
 http://localhost:8080/siraywasi/especificacionprenda/registrarespecificacion
+http://localhost:8080/siraywasi/materiaprima/listado
+http://localhost:8080/siraywasi/materiaprima/inventario
+http://localhost:8080/siraywasi/prenda/listadocatalogo
+http://localhost:8080/siraywasi/prenda/registrarprenda
+http://localhost:8080/siraywasi/molde/registraroperacionmolde
+http://localhost:8080/siraywasi/molde/listadomoldeespecificacionprenda
 
 http://www.arquitecturajava.com/pojos-vo-dto-y-javabeans/
 http://librosweb.es/bootstrap_3/capitulo_5/botones.html

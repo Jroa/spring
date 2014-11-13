@@ -2,28 +2,33 @@ package pe.com.siraywasi.model;
 
 public class TipoTela {
 	private int idTipoTela;
-	private String nombreTela;
+	private String nombreTipoTela;
 	
 	public TipoTela() {
 	}
-	
-	public TipoTela(int idTipoTela, String nombreTela) {
+
+	public TipoTela(int idTipoTela, String nombreTipoTela) {
 		this.idTipoTela = idTipoTela;
-		this.nombreTela = nombreTela;
+		this.nombreTipoTela = nombreTipoTela;
 	}
-	
+
 	public int getIdTipoTela() {
 		return idTipoTela;
 	}
+
 	public void setIdTipoTela(int idTipoTela) {
 		this.idTipoTela = idTipoTela;
 	}
-	public String getNombreTela() {
-		return nombreTela;
+
+	public String getNombreTipoTela() {
+		return nombreTipoTela;
 	}
-	public void setNombreTela(String nombreTela) {
-		this.nombreTela = nombreTela;
+
+	public void setNombreTipoTela(String nombreTipoTela) {
+		this.nombreTipoTela = nombreTipoTela;
 	}
+	
+
 	
 	
 }
