@@ -24,7 +24,7 @@ public class PrendaController {
 	@Autowired
 	private PrendaService prendaService;
 	
-	private Logger log = Logger.getLogger(EspecificacionPrendaController.class);
+	private Logger log = Logger.getLogger(PrendaController.class);
 	
 	@RequestMapping(value="/listadocatalogo", method = RequestMethod.GET)
 	public String listadoCatalogo(Model model){

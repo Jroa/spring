@@ -25,7 +25,7 @@ public class MateriaPrimaController {
 	@Autowired
 	private MateriaPrimaService materiaPrimaService;
 	
-	private Logger log = Logger.getLogger(EspecificacionPrendaController.class);
+	private Logger log = Logger.getLogger(MateriaPrimaService.class);
 	
 	@RequestMapping(value="/listado", method= RequestMethod.GET)
 	private String listado(Model model){
