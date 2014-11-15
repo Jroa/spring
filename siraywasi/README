@@ -10,6 +10,8 @@ http://localhost:8080/siraywasi/prenda/registrarprenda
 http://localhost:8080/siraywasi/molde/registraroperacionmolde
 http://localhost:8080/siraywasi/molde/listadomoldeespecificacionprenda
 http://localhost:8080/siraywasi/molde/registrarmolde
+http://localhost:8080/siraywasi/planproduccion/registrarplanproduccion
+
 
 http://www.arquitecturajava.com/pojos-vo-dto-y-javabeans/
 http://librosweb.es/bootstrap_3/capitulo_5/botones.html

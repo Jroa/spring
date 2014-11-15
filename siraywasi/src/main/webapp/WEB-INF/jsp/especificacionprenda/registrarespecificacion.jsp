@@ -67,7 +67,7 @@
 						<div class="col-lg-4">
 							<form:select path="tipoTela.idTipoTela" id="idTipoTela"
 								class="form-control">
-								<form:options items="${listaTipoTelas}" itemLabel="nombreTela"
+								<form:options items="${listaTipoTelas}" itemLabel="nombreTipoTela"
 									itemValue="idTipoTela" />
 							</form:select>
 						</div>
