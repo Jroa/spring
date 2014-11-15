@@ -11,6 +11,8 @@ http://localhost:8080/siraywasi/molde/registraroperacionmolde
 http://localhost:8080/siraywasi/molde/listadomoldeespecificacionprenda
 http://localhost:8080/siraywasi/molde/registrarmolde
 http://localhost:8080/siraywasi/planproduccion/registrarplanproduccion
+http://localhost:8080/siraywasi/presupuesto/registrarpresupuesto
+
 
 
 http://www.arquitecturajava.com/pojos-vo-dto-y-javabeans/
