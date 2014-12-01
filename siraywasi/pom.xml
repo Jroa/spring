@@ -23,7 +23,13 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
+		<dependency>
+		       <groupId>mysql</groupId>
+		       <artifactId>mysql-connector-java</artifactId>
+		        <version>5.1.9</version>
+		</dependency>		
 		<!-- Spring 3 dependencies -->
+				
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -41,6 +47,12 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+        <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+        </dependency>		
 	</dependencies>
 	<build>
 		<finalName>siraywasi</finalName>

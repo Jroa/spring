@@ -3,14 +3,23 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.MoldeMedidaTallaDao;
 import pe.com.siraywasi.model.dto.MoldeMedidaTallaDTO;
 
 @Repository
-public class MoldeMedidaTallaDaoImpl implements MoldeMedidaTallaDao {
+public class MoldeMedidaTallaDaoImpl extends SimpleJdbcDaoSupport implements MoldeMedidaTallaDao {
 
+	@Autowired
+	public MoldeMedidaTallaDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}		
+	
 	@Override
 	public List<MoldeMedidaTallaDTO> listadoMoldeMedidaTalla(int idMolde, String tipoTalla) {
 		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS = new ArrayList<MoldeMedidaTallaDTO>(); 

@@ -3,14 +3,23 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.ColorDao;
 import pe.com.siraywasi.model.Color;
 
 @Repository
-public class ColorDaoImpl implements ColorDao{
+public class ColorDaoImpl extends SimpleJdbcDaoSupport implements ColorDao{
 
+	@Autowired
+	public ColorDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}	
+	
 	@Override
 	public List<Color> listadoColor() {
 		List<Color> listadoColor = new ArrayList<Color>();

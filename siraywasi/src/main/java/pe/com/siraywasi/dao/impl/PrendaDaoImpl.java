@@ -3,6 +3,10 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.PrendaDao;
@@ -10,8 +14,13 @@ import pe.com.siraywasi.model.Prenda;
 import pe.com.siraywasi.model.dto.PrendaMantenimientoDTO;
 
 @Repository
-public class PrendaDaoImpl implements PrendaDao {
+public class PrendaDaoImpl extends SimpleJdbcDaoSupport implements PrendaDao {
 
+	@Autowired
+	public PrendaDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}	
+	
 	@Override
 	public List<Prenda> listadoPrenda() {
 		List<Prenda> listadoPrenda = new ArrayList<Prenda>();

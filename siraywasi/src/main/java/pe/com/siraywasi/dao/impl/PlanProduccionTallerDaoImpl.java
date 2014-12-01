@@ -3,14 +3,24 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.PlanProduccionTallerDao;
 import pe.com.siraywasi.model.dto.PlanProduccionTallerResumenDTO;
 
 @Repository
-public class PlanProduccionTallerDaoImpl implements PlanProduccionTallerDao {
+public class PlanProduccionTallerDaoImpl extends SimpleJdbcDaoSupport implements PlanProduccionTallerDao {
 
+	@Autowired
+	public PlanProduccionTallerDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}	
+	
+	
 	@Override
 	public List<PlanProduccionTallerResumenDTO> listadoTalleresResumen() {
 		List<PlanProduccionTallerResumenDTO> listadoResumen = new ArrayList<PlanProduccionTallerResumenDTO>();

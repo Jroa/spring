@@ -3,14 +3,23 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.GeneroDao;
 import pe.com.siraywasi.model.Genero;
 
 @Repository
-public class GeneroDaoImpl implements GeneroDao {
+public class GeneroDaoImpl extends SimpleJdbcDaoSupport implements GeneroDao {
 
+	@Autowired
+	public GeneroDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}	
+	
 	@Override
 	public List<Genero> listaGenero() {
 		List<Genero> listaGenero = new ArrayList<Genero>();

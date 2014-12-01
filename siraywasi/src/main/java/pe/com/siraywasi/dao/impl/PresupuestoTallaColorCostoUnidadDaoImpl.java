@@ -3,15 +3,24 @@ package pe.com.siraywasi.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.PresupuestoTallaColorCostoUnidadDao;
 import pe.com.siraywasi.model.dto.PresupuestoMateriaPrimaTallaDTO;
 
 @Repository
-public class PresupuestoTallaColorCostoUnidadDaoImpl implements
+public class PresupuestoTallaColorCostoUnidadDaoImpl extends SimpleJdbcDaoSupport implements
 		PresupuestoTallaColorCostoUnidadDao {
 
+	@Autowired
+	public PresupuestoTallaColorCostoUnidadDaoImpl(DataSource dataSource){
+		this.setDataSource(dataSource);
+	}	
+	
 	@Override
 	public List<PresupuestoMateriaPrimaTallaDTO> listadoPresupuestoMateriaPrimaTalla(
 			int idPresupuesto, String tipoTalla) {
