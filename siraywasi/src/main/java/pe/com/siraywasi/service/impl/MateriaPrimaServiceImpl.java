@@ -9,10 +9,13 @@ import pe.com.siraywasi.dao.MarcaDao;
 import pe.com.siraywasi.dao.MateriaPrimaDao;
 import pe.com.siraywasi.dao.ProveedorDao;
 import pe.com.siraywasi.dao.TipoCompraDao;
+import pe.com.siraywasi.dao.TipoMateriaPrimaDao;
 import pe.com.siraywasi.dao.UnidadMedidaDao;
 import pe.com.siraywasi.model.Marca;
+import pe.com.siraywasi.model.MateriaPrima;
 import pe.com.siraywasi.model.Proveedor;
 import pe.com.siraywasi.model.TipoCompra;
+import pe.com.siraywasi.model.TipoMateriaPrima;
 import pe.com.siraywasi.model.UnidadMedida;
 import pe.com.siraywasi.model.dto.MateriaPrimaDTO;
 import pe.com.siraywasi.service.MateriaPrimaService;
@@ -34,6 +37,9 @@ public class MateriaPrimaServiceImpl implements MateriaPrimaService {
 	
 	@Autowired
 	private UnidadMedidaDao unidadMedidaDao;
+	
+	@Autowired
+	private TipoMateriaPrimaDao tipoMateriaPrimaDao;
 	
 	@Override
 	public List<MateriaPrimaDTO> listadoMateriaPrima() {
@@ -64,6 +70,16 @@ public class MateriaPrimaServiceImpl implements MateriaPrimaService {
 		List<UnidadMedida> listadoUnidadMedida = unidadMedidaDao.listadoUnidadMedida();
 		return listadoUnidadMedida;
 	}
-	
-	
+
+	@Override
+	public List<TipoMateriaPrima> listadoTipoMateriaPrima() {
+		List<TipoMateriaPrima> listadoTipoMateriaPrima = tipoMateriaPrimaDao.listadoTipoMateriaPrima();
+		return listadoTipoMateriaPrima;
+	}
+
+	@Override
+	public boolean registrarMateriaPrima(MateriaPrima materiaPrima) {
+		boolean resultado = materiaPrimaDao.registrarMateriaPrima(materiaPrima); 
+		return resultado;
+	}
 }

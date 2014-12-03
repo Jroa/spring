@@ -3,6 +3,7 @@ package pe.com.siraywasi.web.form;
 import pe.com.siraywasi.model.Marca;
 import pe.com.siraywasi.model.Proveedor;
 import pe.com.siraywasi.model.TipoCompra;
+import pe.com.siraywasi.model.TipoMateriaPrima;
 import pe.com.siraywasi.model.UnidadMedida;
 
 public class MateriaPrimaForm {
@@ -12,9 +13,19 @@ public class MateriaPrimaForm {
 	private int cantidad;
 	private Proveedor proveedor;
 	private String detalle;
+	private TipoMateriaPrima tipoMateriaPrima;
 	private TipoCompra tipoCompra;
 	private UnidadMedida unidadMedida;
 	private double costo;
+	
+	
+	
+	public TipoMateriaPrima getTipoMateriaPrima() {
+		return tipoMateriaPrima;
+	}
+	public void setTipoMateriaPrima(TipoMateriaPrima tipoMateriaPrima) {
+		this.tipoMateriaPrima = tipoMateriaPrima;
+	}
 	public int getIdMateriaPrima() {
 		return idMateriaPrima;
 	}

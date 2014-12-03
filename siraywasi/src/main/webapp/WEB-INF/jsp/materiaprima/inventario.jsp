@@ -74,6 +74,14 @@
 		
 			<div class="col-md-6">
 				<div class="form-group">
+					<label class="col-lg-6 control-label" for="idTipoMateriaPrima">Tipo Materia P.:</label>
+					<div class="col-lg-6">
+						<form:select path="tipoMateriaPrima.idTipoMateriaPrima" id="idTipoMateriaPrima" class="form-control">
+							<form:options items="${listaTipoMateriaPrimas}" itemLabel="nombreTipoMateriaPrima" itemValue="idTipoMateriaPrima" />
+						</form:select>
+					</div>
+				</div>			
+				<div class="form-group">
 					<label class="col-lg-6 control-label" for="idTipoCompra">Tipo de Compra:</label>
 					<div class="col-lg-6">
 						<form:select path="tipoCompra.idTipoCompra" id="idTipoCompra" class="form-control">
@@ -113,16 +121,18 @@
 				<div class="form-group">
 					<div class="col-lg-3"></div>
 					<div class="col-lg-3"><button type="button" class="btn btn-info">Cancelar</button></div>
-					<div class="col-lg-3"><button type="button" class="btn btn-info">Guardar</button></div>
+					<div class="col-lg-3"><button type="button" class="btn btn-info" onclick="Enviar();">Guardar</button></div>
 					<div class="col-lg-3"><button type="button" class="btn btn-info">Ver Historial</button></div>
 				</div>
 					
-					
-					
 			</div>							
 	</div>
-
-
 	</form:form>
+	
+	<script type="text/javascript">
+		function Enviar(){
+			$("#materiaPrimaForm").submit();
+		}
+	</script> 	
 </body>
 </html>

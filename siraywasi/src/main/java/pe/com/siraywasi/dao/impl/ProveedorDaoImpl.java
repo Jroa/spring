@@ -2,6 +2,7 @@ package pe.com.siraywasi.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -22,13 +23,19 @@ public class ProveedorDaoImpl extends SimpleJdbcDaoSupport implements ProveedorD
 	
 	@Override
 	public List<Proveedor> listadoProveedor() {
-		List<Proveedor> listadoProveedor = new ArrayList<Proveedor>();
-		Proveedor proveedor = null;
-		proveedor = new Proveedor(1,"Proveedor 1");
-		listadoProveedor.add(proveedor);
-		proveedor = new Proveedor(2,"Proveedor 2");
-		listadoProveedor.add(proveedor);
+		String sql = "select idProveedor, nombreProveedor from proveedor";		
 		
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		List<Proveedor> listadoProveedor = new ArrayList<Proveedor>();
+		
+		Proveedor proveedor = null;
+		for(Map<String, Object> row: rows){
+			proveedor = new Proveedor();
+			proveedor.setIdProveedor((Integer)row.get("idProveedor"));
+			proveedor.setNombreProveedor((String)row.get("nombreProveedor"));
+			listadoProveedor.add(proveedor);
+		}
+				
 		return listadoProveedor;
 	}
 

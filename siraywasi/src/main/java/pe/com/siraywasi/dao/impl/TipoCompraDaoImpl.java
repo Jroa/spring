@@ -2,6 +2,7 @@ package pe.com.siraywasi.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -22,12 +23,18 @@ public class TipoCompraDaoImpl extends SimpleJdbcDaoSupport implements TipoCompr
 	
 	@Override
 	public List<TipoCompra> listadoTipoCompra() {
+		String sql = "select idTipoCompra, nombreTipoCompra from Tipocompra";
+		
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 		List<TipoCompra> listadoTipoCompra = new ArrayList<TipoCompra>();
+		
 		TipoCompra tipoCompra = null;
-		tipoCompra = new TipoCompra(1,"Directa");
-		listadoTipoCompra.add(tipoCompra);
-		tipoCompra = new TipoCompra(2,"InDirecta");
-		listadoTipoCompra.add(tipoCompra);
+		for(Map<String, Object> row: rows){
+			tipoCompra = new TipoCompra();
+			tipoCompra.setIdTipoCompra((Integer)row.get("idTipoCompra"));
+			tipoCompra.setNombreTipoCompra((String)row.get("nombreTipoCompra"));
+			listadoTipoCompra.add(tipoCompra);
+		}
 		
 		return listadoTipoCompra;
 	}

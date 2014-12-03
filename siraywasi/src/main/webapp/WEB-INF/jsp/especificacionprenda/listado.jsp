@@ -33,7 +33,7 @@
 							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${item.fechaEntrega}" /></td>
 							<td>${item.nombreCliente}</td>
 							
-							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Crear &nbsp; </button>${item.indicadorMolde}</td>
+							<td><button type="button" class="btn btn-default btn-xs" onclick="location.href='/siraywasi/molde/registrarmolde'"> &nbsp; Crear &nbsp; </button>${item.indicadorMolde}</td>
 							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Pendiente &nbsp; </button>${item.indicadorPresupuesto}</td>
 							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Calcular &nbsp; </button>${item.indicadorPlanProduccion}</td>
 						</tr>								

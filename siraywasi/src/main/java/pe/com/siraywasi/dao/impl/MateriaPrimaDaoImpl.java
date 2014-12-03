@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import pe.com.siraywasi.dao.MateriaPrimaDao;
+import pe.com.siraywasi.model.MateriaPrima;
 import pe.com.siraywasi.model.dto.MateriaPrimaDTO;
 
 @Repository
@@ -63,6 +64,32 @@ public class MateriaPrimaDaoImpl extends SimpleJdbcDaoSupport implements Materia
 		listadoMateriaPrima.add(item);		
 		
 		return listadoMateriaPrima;
+	}
+
+	@Override
+	public boolean registrarMateriaPrima(MateriaPrima materiaPrima) {
+
+		try{
+			String sql ="" +
+                    "insert into MateriaPrima (nombreMateriaPrima, idMarca, cantidad, idProveedor, idTipoMateriaPrima," +
+                    "idTipoCompra, idUnidadMedida, costo, detalle) " +
+                    "values (?,?,?,?,?,?,?,?,?)";
+			
+			this.getSimpleJdbcTemplate().update(sql, 
+					materiaPrima.getNombreMateriaPrima(),
+					materiaPrima.getIdMarca(),
+					materiaPrima.getCantidad(),
+					materiaPrima.getIdProveedor(),
+					materiaPrima.getIdTipoMateriaPrima(),
+					materiaPrima.getIdTipoCompra(),
+					materiaPrima.getIdUnidadMedida(),
+					materiaPrima.getCosto(),
+					materiaPrima.getDetalle());
+			
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
 	}
 
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import pe.com.siraywasi.dao.EspecificacionPrendaDao;
 import pe.com.siraywasi.model.dto.EspecificacionPrendaDTO;
 import pe.com.siraywasi.model.dto.EspecificacionPrendaResumenDTO;
-import pe.com.siraywasi.util.DateUtil;
 
 @Repository
 public class EspecificacionPrendaDaoImpl extends SimpleJdbcDaoSupport implements EspecificacionPrendaDao{

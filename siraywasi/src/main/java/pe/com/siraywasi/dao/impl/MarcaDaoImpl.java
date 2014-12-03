@@ -2,6 +2,7 @@ package pe.com.siraywasi.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -22,15 +23,18 @@ public class MarcaDaoImpl extends SimpleJdbcDaoSupport implements MarcaDao {
 	
 	@Override
 	public List<Marca> listadoMarca() {
-		List<Marca> listadoMarca = new ArrayList<Marca>();
-		Marca marca = null;
+		String sql = "select idMarca, nombreMarca from Marca";		
 		
-		marca = new Marca(1,"Rey");
-		listadoMarca.add(marca);
-		marca = new Marca(2,"Marca 2");
-		listadoMarca.add(marca);
-	
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+		List<Marca> listadoMarca = new ArrayList<Marca>();
+		
+		Marca marca = null;
+		for(Map<String, Object> row: rows){
+			marca = new Marca();
+			marca.setIdMarca((Integer)row.get("idMarca"));
+			marca.setNombreMarca((String)row.get("nombreMarca"));
+			listadoMarca.add(marca);
+		}
 		return listadoMarca;
 	}
-
 }

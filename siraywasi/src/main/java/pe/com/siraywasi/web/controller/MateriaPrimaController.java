@@ -6,13 +6,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pe.com.siraywasi.model.Marca;
+import pe.com.siraywasi.model.MateriaPrima;
 import pe.com.siraywasi.model.Proveedor;
 import pe.com.siraywasi.model.TipoCompra;
+import pe.com.siraywasi.model.TipoMateriaPrima;
 import pe.com.siraywasi.model.UnidadMedida;
 import pe.com.siraywasi.model.dto.MateriaPrimaDTO;
 import pe.com.siraywasi.service.MateriaPrimaService;
@@ -49,6 +52,25 @@ public class MateriaPrimaController {
 		return "materiaprima/inventario";
 	}
 	
+	@RequestMapping(value="/inventario", method= RequestMethod.POST)
+	private String inventario(@ModelAttribute("materiaPrimaForm") MateriaPrimaForm form, 
+											BindingResult result, Model model){
+
+		MateriaPrima materiaPrima = new MateriaPrima();
+		materiaPrima.setNombreMateriaPrima(form.getNombreMateriaPrima());
+		materiaPrima.setIdMarca(form.getMarca().getIdMarca());
+		materiaPrima.setCantidad(form.getCantidad());
+		materiaPrima.setIdProveedor(form.getProveedor().getIdProveedor());
+		materiaPrima.setIdTipoMateriaPrima(form.getTipoMateriaPrima().getIdTipoMateriaPrima());
+		materiaPrima.setIdTipoCompra(form.getTipoCompra().getIdTipoCompra());
+		materiaPrima.setCosto(form.getCosto());
+		materiaPrima.setDetalle(form.getDetalle());
+		
+		materiaPrimaService.registrarMateriaPrima(materiaPrima);
+		
+		return "materiaprima/inventario";
+	}
+	
 	@ModelAttribute("listaMarcas")
 	private List<Marca> listaMarca(){
 		List<Marca> listaMarca = materiaPrimaService.listadoMarca();
@@ -72,4 +94,11 @@ public class MateriaPrimaController {
 		List<UnidadMedida> listaUnidadMedida = materiaPrimaService.listadoUnidadMedida();
 		return listaUnidadMedida;
 	}
+	
+	@ModelAttribute("listaTipoMateriaPrimas")
+	private List<TipoMateriaPrima> listaTipoMateriaPrima(){
+		List<TipoMateriaPrima> listaTipoMateriaPrima = materiaPrimaService.listadoTipoMateriaPrima();
+		return listaTipoMateriaPrima;
+	}
+	
 }
