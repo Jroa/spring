@@ -8,6 +8,11 @@
 	<title>Lista de Molde por Especificacion de Prenda</title>
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap.min.css" />" rel="stylesheet"/>
 	<link href="<c:url value="/resources/bootstrap/css/bootstrap-theme.min.css" />" rel="stylesheet" />	
+	
+	<script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+	<script src="<c:url value="/resources/js/ui/1.11.2/jquery-ui.js" />"></script>
+	<link rel="stylesheet" href="<c:url value="/resources/js/ui/1.11.2/jquery-ui.css" />" />
+	<script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"></script>	
 </head>
 <body>
 			<h3>Lista de Molde por Especificacion de Prenda</h3>
@@ -25,10 +30,17 @@
 				<tbody>
 					<c:forEach var="item" items="${listadoMoldeEspecificacionPrenda}">
 						<tr>
-							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Crear &nbsp; </button></td>
-							<td>${item.nombreMolde}</td>
+							<td>
+							<c:if test="${item.idMolde <= 0}">
+							   <button type="button" class="btn btn-default btn-xs" onclick="location.href='/siraywasi/molde/registrarmolde'"> &nbsp; Crear &nbsp; </button>
+							</c:if>
+							<c:if test="${item.idMolde > 0}">
+							   <button type="button" class="btn btn-default btn-xs"> &nbsp; Modificar &nbsp; </button>
+							</c:if>							
+							</td>
+							<td>${item.nombreCatalogoPrenda}</td>
 							<td>${item.nombreCliente}</td>
-							<td>${item.estado}</td>
+							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Asignado &nbsp; </button></td>
 							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Crear &nbsp; </button></td>
 							<td><button type="button" class="btn btn-default btn-xs"> &nbsp; Asignar &nbsp; </button></td>
 						</tr>								

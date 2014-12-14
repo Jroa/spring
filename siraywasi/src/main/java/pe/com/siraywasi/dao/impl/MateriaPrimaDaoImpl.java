@@ -2,6 +2,7 @@ package pe.com.siraywasi.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -23,45 +24,28 @@ public class MateriaPrimaDaoImpl extends SimpleJdbcDaoSupport implements Materia
 	
 	@Override
 	public List<MateriaPrimaDTO> listadoMateriaPrima() {
+		String sql = "" +
+				"select MP.idMateriaPrima, MP.nombreMateriaPrima, MP.cantidad, UM.nombreUnidadMedida, MP.costo, PV.nombreProveedor " + 
+				"from MateriaPrima MP, " +
+				"UnidadMedida UM, " + 
+				"Proveedor PV " +
+				"where MP.idUnidadMedida = UM.idUnidadMedida " +
+				"and MP.idProveedor = PV.idProveedor";
 		
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
 		List<MateriaPrimaDTO> listadoMateriaPrima = new ArrayList<MateriaPrimaDTO>();
 		MateriaPrimaDTO item = null;
 		
-		item = new MateriaPrimaDTO();
-		item.setIdMateriaPrima(1);
-		item.setNombreMateriaPrima("Hilo Rojo 3 puntos");
-		item.setCantidad(200);
-		item.setNombreUnidadMedida("Unidad");
-		item.setUltimoCosto(1.93);
-		item.setNombreProveedor("Prima");
-		listadoMateriaPrima.add(item);
-		
-		item = new MateriaPrimaDTO();
-		item.setIdMateriaPrima(2);
-		item.setNombreMateriaPrima("Cierre pantalon 25cm");
-		item.setCantidad(500);
-		item.setNombreUnidadMedida("Unidad");
-		item.setUltimoCosto(1.93);
-		item.setNombreProveedor("Prima");
-		listadoMateriaPrima.add(item);		
-
-		item = new MateriaPrimaDTO();
-		item.setIdMateriaPrima(3);
-		item.setNombreMateriaPrima("Boton ancho");
-		item.setCantidad(1000);
-		item.setNombreUnidadMedida("Unidad");
-		item.setUltimoCosto(1.93);
-		item.setNombreProveedor("Prima");
-		listadoMateriaPrima.add(item);		
-		
-		item = new MateriaPrimaDTO();
-		item.setIdMateriaPrima(4);
-		item.setNombreMateriaPrima("Hojalillo");
-		item.setCantidad(700);
-		item.setNombreUnidadMedida("Unidad");
-		item.setUltimoCosto(1.93);
-		item.setNombreProveedor("Prima");
-		listadoMateriaPrima.add(item);		
+		for(Map<String, Object> row: rows){
+			item = new MateriaPrimaDTO();
+			item.setIdMateriaPrima((Integer)row.get("idMateriaPrima"));
+			item.setNombreMateriaPrima((String)row.get("nombreMateriaPrima"));
+			item.setCantidad((Integer)row.get("cantidad"));
+			item.setNombreUnidadMedida((String)row.get("nombreUnidadMedida"));
+			item.setUltimoCosto(Double.parseDouble(row.get("costo").toString()));
+			item.setNombreProveedor((String)row.get("nombreProveedor"));			
+			listadoMateriaPrima.add(item);
+		}
 		
 		return listadoMateriaPrima;
 	}
@@ -86,6 +70,17 @@ public class MateriaPrimaDaoImpl extends SimpleJdbcDaoSupport implements Materia
 					materiaPrima.getCosto(),
 					materiaPrima.getDetalle());
 			
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
+
+	@Override
+	public boolean eliminarMateriaPrima(int idMateriaPrima) {
+		try{
+			String sql = "Delete from MateriaPrima where idMateriaPrima = ?"; 
+			this.getSimpleJdbcTemplate().update(sql, idMateriaPrima);
 			return true;
 		}catch(Exception ex){
 			return false;

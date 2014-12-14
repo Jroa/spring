@@ -2,6 +2,7 @@ package pe.com.siraywasi.web.form;
 
 public class MoldeConfeccionListaForm {
 	private int idMolde;
+	private int idMoldeConfeccion;
 	private String nombreConfeccion;
 	private String detalleConfeccion;
 	
@@ -9,12 +10,15 @@ public class MoldeConfeccionListaForm {
 	
 	public MoldeConfeccionListaForm() {
 	}
-	public MoldeConfeccionListaForm(int idMolde, String nombreConfeccion,
-			String detalleConfeccion) {
+
+	public MoldeConfeccionListaForm(int idMolde, int idMoldeConfeccion,
+			String nombreConfeccion, String detalleConfeccion) {
 		this.idMolde = idMolde;
+		this.idMoldeConfeccion = idMoldeConfeccion;
 		this.nombreConfeccion = nombreConfeccion;
 		this.detalleConfeccion = detalleConfeccion;
 	}
+
 	public int getIdMolde() {
 		return idMolde;
 	}
@@ -32,6 +36,14 @@ public class MoldeConfeccionListaForm {
 	}
 	public void setDetalleConfeccion(String detalleConfeccion) {
 		this.detalleConfeccion = detalleConfeccion;
+	}
+
+	public int getIdMoldeConfeccion() {
+		return idMoldeConfeccion;
+	}
+
+	public void setIdMoldeConfeccion(int idMoldeConfeccion) {
+		this.idMoldeConfeccion = idMoldeConfeccion;
 	}
 	
 	

@@ -55,7 +55,7 @@ public class EspecificacionPrendaDaoImpl extends SimpleJdbcDaoSupport implements
 			item.setIndicadorPresupuesto((String)row.get("indicadorPlanProduccion"));
 			item.setIndicadorPlanProduccion((String)row.get("indicadorPresupuesto"));
 
-			listadoEspecificacionPrenda.add(item);			
+			listadoEspecificacionPrenda.add(item);
 		}
 		
 		return listadoEspecificacionPrenda;

@@ -19,4 +19,5 @@ public interface MateriaPrimaService {
 	public List<TipoMateriaPrima> listadoTipoMateriaPrima();
 	
 	public boolean registrarMateriaPrima(MateriaPrima materiaPrima);
+	public boolean eliminarMateriaPrima(int idMateriaPrima);
 }

@@ -1,12 +1,19 @@
 package pe.com.siraywasi.model;
 
 public class MoldeAvio {
-	private int idMolde;
 	private int idMoldeAvio;
+	private int idMolde;
 	private int idAvio;
 	
 	
 	
+	public MoldeAvio() {
+	}
+	public MoldeAvio(int idMoldeAvio, int idMolde, int idAvio) {
+		this.idMoldeAvio = idMoldeAvio;
+		this.idMolde = idMolde;
+		this.idAvio = idAvio;
+	}
 	public int getIdMolde() {
 		return idMolde;
 	}

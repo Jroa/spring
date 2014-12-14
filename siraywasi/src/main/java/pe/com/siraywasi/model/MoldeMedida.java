@@ -1,10 +1,19 @@
 package pe.com.siraywasi.model;
 
 public class MoldeMedida {
-	private int idMolde;
 	private int idMoldeMedida;
+	private int idMolde;
 	private String nombreMoldeMedida;
 	
+	
+	
+	public MoldeMedida() {
+	}
+	public MoldeMedida(int idMoldeMedida, int idMolde, String nombreMoldeMedida) {
+		this.idMoldeMedida = idMoldeMedida;
+		this.idMolde = idMolde;
+		this.nombreMoldeMedida = nombreMoldeMedida;
+	}
 	public int getIdMolde() {
 		return idMolde;
 	}

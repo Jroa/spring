@@ -17,9 +17,14 @@ public class MateriaPrimaForm {
 	private TipoCompra tipoCompra;
 	private UnidadMedida unidadMedida;
 	private double costo;
-	
-	
-	
+	private String resultadoGrabar;
+
+	public String getResultadoGrabar() {
+		return resultadoGrabar;
+	}
+	public void setResultadoGrabar(String resultadoGrabar) {
+		this.resultadoGrabar = resultadoGrabar;
+	}
 	public TipoMateriaPrima getTipoMateriaPrima() {
 		return tipoMateriaPrima;
 	}

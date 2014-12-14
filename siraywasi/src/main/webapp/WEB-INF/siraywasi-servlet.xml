@@ -18,4 +18,10 @@
 	</bean>	
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- Returns messages based on a resource bundle -->
+	<!-- validation sin extension properties -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/validation" />
+	</bean>		
 </beans>

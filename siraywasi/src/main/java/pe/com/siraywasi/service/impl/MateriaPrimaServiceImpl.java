@@ -82,4 +82,10 @@ public class MateriaPrimaServiceImpl implements MateriaPrimaService {
 		boolean resultado = materiaPrimaDao.registrarMateriaPrima(materiaPrima); 
 		return resultado;
 	}
+
+	@Override
+	public boolean eliminarMateriaPrima(int idMateriaPrima) {
+		boolean resultado = materiaPrimaDao.eliminarMateriaPrima(idMateriaPrima);
+		return resultado;
+	}
 }

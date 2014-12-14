@@ -1,12 +1,24 @@
 package pe.com.siraywasi.model;
 
 public class MoldeMedidaTalla {
-	private int idMoldeMedida;
 	private int idMoldeMedidaTalla;
-	private int idTalla;
+	private int idMoldeMedida;
+	private String tipoTalla;
 	private String corte;
 	private String prendaFinal;
 	
+	public MoldeMedidaTalla() {
+	}
+	
+	public MoldeMedidaTalla(int idMoldeMedidaTalla, int idMoldeMedida,
+			String tipoTalla, String corte, String prendaFinal) {
+		this.idMoldeMedidaTalla = idMoldeMedidaTalla;
+		this.idMoldeMedida = idMoldeMedida;
+		this.tipoTalla = tipoTalla;
+		this.corte = corte;
+		this.prendaFinal = prendaFinal;
+	}
+
 	public int getIdMoldeMedida() {
 		return idMoldeMedida;
 	}
@@ -19,11 +31,12 @@ public class MoldeMedidaTalla {
 	public void setIdMoldeMedidaTalla(int idMoldeMedidaTalla) {
 		this.idMoldeMedidaTalla = idMoldeMedidaTalla;
 	}
-	public int getIdTalla() {
-		return idTalla;
+
+	public String getTipoTalla() {
+		return tipoTalla;
 	}
-	public void setIdTalla(int idTalla) {
-		this.idTalla = idTalla;
+	public void setTipoTalla(String tipoTalla) {
+		this.tipoTalla = tipoTalla;
 	}
 	public String getCorte() {
 		return corte;

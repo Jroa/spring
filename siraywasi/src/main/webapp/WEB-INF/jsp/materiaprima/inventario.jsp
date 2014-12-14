@@ -29,14 +29,30 @@
 		class="form-horizontal">
 		<legend>Materia Prima</legend>
 
+		<form:hidden path="resultadoGrabar" />
+
+		<spring:hasBindErrors name="materiaPrimaForm">
+		  <c:if test="${errors.hasFieldErrors('nombreMateriaPrima')}">
+		    <c:set var="errorClass01" value="has-error" />
+		  </c:if>
+		  <c:if test="${errors.hasFieldErrors('cantidad')}">
+		    <c:set var="errorClass02" value="has-error" />
+		  </c:if>
+		  <c:if test="${errors.hasFieldErrors('costo')}">
+		    <c:set var="errorClass03" value="has-error" />
+		  </c:if>		  
+		  				  
+		</spring:hasBindErrors>
+
 		<div class="col-md-6">
 			<div class="col-md-6">
-				<div class="form-group">
+				<div id="divNombreMateriaPrima" class="form-group <c:out value='${errorClass01}' />">
 					<label class="col-lg-3 control-label" for="nombreMateriaPrima">Nombre:</label>
 					<div class="col-lg-9">
 						<form:input path="nombreMateriaPrima" maxlength="50"
 							class="form-control input-sm" id="nombreMateriaPrima" />
-						<form:errors path="nombreMateriaPrima" />
+							<form:errors path="nombreMateriaPrima" class="text-danger"/>
+							<div id="alertaNombreMateriaPrima" class="text-danger"></div>
 					</div>
 				</div>
 	
@@ -49,11 +65,12 @@
 					</div>
 				</div>
 				
-				<div class="form-group">
+				<div id="divCantidad" class="form-group <c:out value='${errorClass02}' />">
 					<label class="col-lg-3 control-label" for="cantidad">Cantidad:</label>
 					<div class="col-lg-9">
 						<form:input path="cantidad" maxlength="50" class="form-control input-sm" id="cantidad" />
-						<form:errors path="cantidad" />
+						<form:errors path="cantidad" class="text-danger" />
+						<div id="alertaCantidad" class="text-danger"></div>
 					</div>
 				</div>
 				
@@ -97,11 +114,12 @@
 						</form:select>
 					</div>
 				</div>
-				<div class="form-group">
+				<div id="divCosto" class="form-group <c:out value='${errorClass03}' />">
 					<label class="col-lg-6 control-label" for="costo">Costo:</label>
 					<div class="col-lg-6">
 						<form:input path="costo" maxlength="50" class="form-control input-sm" id="costo" />
-						<form:errors path="costo" />
+						<form:errors path="costo" class="text-danger"/>
+						<div id="alertaCosto" class="text-danger"></div>
 					</div>
 				</div>
 			</div>
@@ -120,7 +138,7 @@
 				<br/>
 				<div class="form-group">
 					<div class="col-lg-3"></div>
-					<div class="col-lg-3"><button type="button" class="btn btn-info">Cancelar</button></div>
+					<div class="col-lg-3"><button type="button" class="btn btn-info" onclick="Cancelar()">Cancelar</button></div>
 					<div class="col-lg-3"><button type="button" class="btn btn-info" onclick="Enviar();">Guardar</button></div>
 					<div class="col-lg-3"><button type="button" class="btn btn-info">Ver Historial</button></div>
 				</div>
@@ -130,8 +148,59 @@
 	</form:form>
 	
 	<script type="text/javascript">
+		$(document).ready(function() {
+			if($("#resultadoGrabar").val()=="OK"){
+				alert("Los datos se guardaron exitosamente");
+				location.href='/siraywasi/materiaprima/listado';
+			}
+		});	
+	
 		function Enviar(){
+			var errores = 0;
+			
+			//Validar el nombre
+			if ($('#nombreMateriaPrima').val().trim()=="")
+			{
+				$('#divNombreMateriaPrima').attr("class", "form-group has-error");
+				$('#alertaNombreMateriaPrima').text("Debe ingresar un nombre");
+				errores++;
+			}else{
+				$('#divNombreMateriaPrima').attr("class", "form-group");
+				$('#alertaNombreMateriaPrima').text("");				
+			}
+			
+			//Validar la cantidad
+			if ($('#cantidad').val().trim() =="" || isNaN($('#cantidad').val().trim()) || $('#cantidad').val() <= 0)
+			{
+				$('#divCantidad').attr("class", "form-group has-error");
+				$('#alertaCantidad').text('Debe Ingresar un cantidad valida');
+				errores++;
+			}else{
+				$('#divCantidad').attr("class", "form-group");
+				$('#alertaCantidad').text('');
+			}
+
+			//Validar el costo
+			if ($('#costo').val().trim() =="" || isNaN($('#costo').val().trim()) || $('#costo').val() <= 0)
+			{
+				$('#divCosto').attr("class", "form-group has-error");
+				$('#alertaCosto').text('Debe Ingresar un costo valido');
+				errores++;
+			}else{
+				$('#divCosto').attr("class", "form-group");
+				$('#alertaCosto').text('');
+			}
+			
+			if (errores > 0) 
+			{
+				return;
+			}
+			
 			$("#materiaPrimaForm").submit();
+		}
+		
+		function Cancelar(){
+			location.href='/siraywasi/materiaprima/listado';
 		}
 	</script> 	
 </body>

@@ -1,11 +1,12 @@
 package pe.com.siraywasi.model.dto;
 
+
 public class MateriaPrimaDTO {
 	private int idMateriaPrima;
 	private String nombreMateriaPrima;
 	private int cantidad;
 	private String nombreUnidadMedida;
-	private double ultimoCosto;
+	private Double ultimoCosto;
 	private String nombreProveedor;
 	
 	public int getIdMateriaPrima() {
@@ -35,7 +36,7 @@ public class MateriaPrimaDTO {
 	public double getUltimoCosto() {
 		return ultimoCosto;
 	}
-	public void setUltimoCosto(double ultimoCosto) {
+	public void setUltimoCosto(Double ultimoCosto) {
 		this.ultimoCosto = ultimoCosto;
 	}
 	public String getNombreProveedor() {

@@ -7,20 +7,32 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import pe.com.siraywasi.model.Avio;
+import pe.com.siraywasi.model.Molde;
+import pe.com.siraywasi.model.MoldeAvio;
+import pe.com.siraywasi.model.MoldeConfeccion;
+import pe.com.siraywasi.model.MoldeMedida;
+import pe.com.siraywasi.model.MoldeMedidaTalla;
 import pe.com.siraywasi.model.dto.MoldeEspecificacionPrendaDTO;
 import pe.com.siraywasi.model.dto.MoldeMedidaTallaDTO;
 import pe.com.siraywasi.model.dto.MoldeOperacionDTO;
 import pe.com.siraywasi.service.MoldeService;
-import pe.com.siraywasi.web.form.MoldeAvioListaForm;
 import pe.com.siraywasi.web.form.MoldeConfeccionListaForm;
 import pe.com.siraywasi.web.form.MoldeForm;
 import pe.com.siraywasi.web.form.MoldeOperacionForm;
 
 @Controller
 @RequestMapping("/molde")
+@SessionAttributes({"listaAvioDisponible","listaAvioAsignado",
+	"listadoMoldeMedidaTallaS","listadoMoldeMedidaTallaM","listadoMoldeMedidaTallaL","listadoMoldeMedidaTallaXL",
+	"listaConfeccion"})
 public class MoldeController {
 
 	@Autowired
@@ -59,15 +71,14 @@ public class MoldeController {
 		MoldeForm moldeForm = new MoldeForm();
 		model.addAttribute("moldeForm", moldeForm);
 
-		List<MoldeAvioListaForm> listaAvioDisponible = listaAvioDisponible();
-		model.addAttribute("listaAvioDisponible",listaAvioDisponible);
-		List<MoldeAvioListaForm> listaAvioAsignado = listaAvioAsignado();
-		model.addAttribute("listaAvioAsignado",listaAvioAsignado);
+
 		
-		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS = moldeService.listadoMoldeMedidaTalla(1, "S"); 
-		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaM = moldeService.listadoMoldeMedidaTalla(1, "M");
-		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaL = moldeService.listadoMoldeMedidaTalla(1, "L");
-		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaXL = moldeService.listadoMoldeMedidaTalla(1, "XL");
+		//eliminar MoldeAvioListaForm
+		
+		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS = new ArrayList<MoldeMedidaTallaDTO>(); //moldeService.listadoMoldeMedidaTalla(1, "S"); 
+		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaM = new ArrayList<MoldeMedidaTallaDTO>(); //moldeService.listadoMoldeMedidaTalla(1, "M");
+		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaL = new ArrayList<MoldeMedidaTallaDTO>(); //moldeService.listadoMoldeMedidaTalla(1, "L");
+		List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaXL = new ArrayList<MoldeMedidaTallaDTO>(); //moldeService.listadoMoldeMedidaTalla(1, "XL");
 		
 		model.addAttribute("listadoMoldeMedidaTallaS", listadoMoldeMedidaTallaS);
 		model.addAttribute("listadoMoldeMedidaTallaM", listadoMoldeMedidaTallaM);
@@ -75,48 +86,246 @@ public class MoldeController {
 		model.addAttribute("listadoMoldeMedidaTallaXL", listadoMoldeMedidaTallaXL);
 		
 		
-		List<MoldeConfeccionListaForm> listaConfeccion = listaConfeccion();
+		List<MoldeConfeccionListaForm> listaConfeccion = new ArrayList<MoldeConfeccionListaForm>();//listaConfeccion();
 		model.addAttribute("listaConfeccion", listaConfeccion);
 		
 		return "molde/registrarmolde";
 	}
 	
-	private List<MoldeAvioListaForm> listaAvioDisponible(){
-		List<MoldeAvioListaForm> listaAvioDisponible = new ArrayList<MoldeAvioListaForm>();
-		MoldeAvioListaForm item = null;
-		item = new MoldeAvioListaForm(1,"Cierre","D");
-		listaAvioDisponible.add(item);
-		item = new MoldeAvioListaForm(2,"Cuello","D");
-		listaAvioDisponible.add(item);
-		item = new MoldeAvioListaForm(3,"Estampado","D");
-		listaAvioDisponible.add(item);
+	@RequestMapping(value="/registrarmolde", method = RequestMethod.POST)
+	private String registrarMolde(@ModelAttribute("moldeForm") MoldeForm moldeForm,
+								@ModelAttribute("listaAvioAsignado") List<Avio> listaAvioAsignado,
+								@ModelAttribute("listadoMoldeMedidaTallaS") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS,
+								@ModelAttribute("listadoMoldeMedidaTallaM") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaM,
+								@ModelAttribute("listadoMoldeMedidaTallaL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaL,
+								@ModelAttribute("listadoMoldeMedidaTallaXL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaXL,
+								@ModelAttribute("listaConfeccion") List<MoldeConfeccionListaForm> listaConfeccion,
+								BindingResult result, Model model){
 		
-		return listaAvioDisponible;
+		Molde molde = new Molde();
+		molde.setNombreMolde(moldeForm.getNombreMolde());
+		molde.setPrenda(moldeForm.getNombrePrenda());
+		molde.setDetalle(moldeForm.getDetalle());
+		
+		//registrar el molde
+		int idMolde = moldeService.registrarMolde(molde);
+		//registrar el molde Avio
+		int idMoldeAvio = 0;
+		MoldeAvio moldeAvio = null;
+		for(Avio avio: listaAvioAsignado){
+			moldeAvio = new MoldeAvio(0,idMolde, avio.getIdAvio());
+			idMoldeAvio = moldeService.registrarMoldeAvio(idMolde, moldeAvio);
+			log.debug(idMoldeAvio);
+		}
+		//registrar el molde medida
+		int idMoldeMedida = 0;
+		MoldeMedida moldeMedida = null;
+		
+		for(MoldeMedidaTallaDTO item : listadoMoldeMedidaTallaS){
+			moldeMedida = new MoldeMedida(0,idMolde,item.getNombreMoldeMedida());
+			idMoldeMedida = moldeService.registrarMoldeMedida(idMolde, moldeMedida);
+			
+			//registrar el molde medida talla
+			registrarMoldeMedidaTalla(listadoMoldeMedidaTallaS, idMoldeMedida);
+			registrarMoldeMedidaTalla(listadoMoldeMedidaTallaM, idMoldeMedida);
+			registrarMoldeMedidaTalla(listadoMoldeMedidaTallaL, idMoldeMedida);
+			registrarMoldeMedidaTalla(listadoMoldeMedidaTallaXL, idMoldeMedida);
+		}
+		
+		//registrar molde confecciones
+		int idMoldeConfeccion = 0;
+		MoldeConfeccion moldeConfeccion = null;
+		for(MoldeConfeccionListaForm item : listaConfeccion){
+			moldeConfeccion = new MoldeConfeccion(0, idMolde, item.getNombreConfeccion(), item.getDetalleConfeccion());
+			idMoldeConfeccion = moldeService.registrarMoldeConfeccion(idMolde, moldeConfeccion);
+			log.debug(idMoldeConfeccion);
+		}
+		
+		moldeForm = new MoldeForm();
+		moldeForm.setResultadoGrabar("OK");
+		model.addAttribute("moldeForm", moldeForm);
+		
+		return "molde/registrarmolde";
 	}
 	
-	private List<MoldeAvioListaForm> listaAvioAsignado(){
-		List<MoldeAvioListaForm> listaAvioAsignado = new ArrayList<MoldeAvioListaForm>();
-		MoldeAvioListaForm item = null;
-		item = new MoldeAvioListaForm(4,"Bordado","A");
-		listaAvioAsignado.add(item);
-		item = new MoldeAvioListaForm(5,"Forro de popelina","A");
-		listaAvioAsignado.add(item);
-		item = new MoldeAvioListaForm(6,"Elastico","A");
-		listaAvioAsignado.add(item);
-		item = new MoldeAvioListaForm(7,"Cola de rata en la cintura","A");
-		listaAvioAsignado.add(item);
-		
-		return listaAvioAsignado;
-	}	
+	private boolean registrarMoldeMedidaTalla(List<MoldeMedidaTallaDTO> listaTallas, int idMoldeMedida){
+		try{
+			MoldeMedidaTalla moldeMedidaTalla = null;
+			int idMoldeMedidaTalla = 0;
+			
+			for(MoldeMedidaTallaDTO talla : listaTallas){
+				moldeMedidaTalla = new MoldeMedidaTalla(0,idMoldeMedida, talla.getTipoTalla(), talla.getCorte(), talla.getPrendaFinal());
+				idMoldeMedidaTalla = moldeService.registrarMoldeMedidaTalla(idMoldeMedida, moldeMedidaTalla);
+				log.debug(idMoldeMedidaTalla);
+			}		 
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
 	
-	private List<MoldeConfeccionListaForm> listaConfeccion(){
-		List<MoldeConfeccionListaForm> listaConfeccion = new ArrayList<MoldeConfeccionListaForm>();
-		MoldeConfeccionListaForm item = null;
-		item = new MoldeConfeccionListaForm(1,"Bragueta","Orillado con remate simple (1 aguja) con doble pespunte en costura a 11 puntadas por pulgada");
-		listaConfeccion.add(item);
-		item = new MoldeConfeccionListaForm(1,"Bolsillo Delantero","Embolsado con remalle simple y recubierto de dos agujas con sep de 1/4\" a 11 puntadas por pulgada ");
-		listaConfeccion.add(item);
+	
+	@RequestMapping(value="/agregaravio", method = RequestMethod.POST)
+	private String agregarAvio(@RequestParam("idAvio") int idAvio, Model model,
+			@ModelAttribute("listaAvioDisponible") List<Avio> listaAvioDisponible,
+			@ModelAttribute("listaAvioAsignado") List<Avio> listaAvioAsignado
+			){
+		
+		for(Avio avio : listaAvioDisponible){
+			if(avio.getIdAvio()==idAvio){
+				listaAvioAsignado.add(avio);
+				listaAvioDisponible.remove(avio);
+				break;
+			}
+		}
+		
+		model.addAttribute("listaAvioDisponible", listaAvioDisponible);
+		model.addAttribute("listaAvioAsignado", listaAvioAsignado);
+		
+		return "molde/moldeavios";
+	}
+	
+	@RequestMapping(value="/eliminaravio", method = RequestMethod.POST)
+	private String eliminarAvio(@RequestParam("idAvio") int idAvio, Model model,
+			@ModelAttribute("listaAvioDisponible") List<Avio> listaAvioDisponible,
+			@ModelAttribute("listaAvioAsignado") List<Avio> listaAvioAsignado
+			){
+		
+		for(Avio avio: listaAvioAsignado){
+			if(avio.getIdAvio()==idAvio){
+				listaAvioDisponible.add(avio);
+				listaAvioAsignado.remove(avio);
+				break;
+			}
+		}
+		model.addAttribute("listaAvioDisponible", listaAvioDisponible);
+		model.addAttribute("listaAvioAsignado", listaAvioAsignado);
+		
+		return "molde/moldeavios";
+	}
+	
+	@RequestMapping(value="/agregarmedida", method = RequestMethod.POST)
+	private String agregarMedida(@RequestParam("medida") String medida,
+			@RequestParam("corteS") String corteS, @RequestParam("prendaFinalS") String prendaFinalS,
+			@RequestParam("corteM") String corteM, @RequestParam("prendaFinalM") String prendaFinalM,
+			@RequestParam("corteL") String corteL, @RequestParam("prendaFinalL") String prendaFinalL,
+			@RequestParam("corteXL") String corteXL, @RequestParam("prendaFinalXL") String prendaFinalXL,
+			@ModelAttribute("listadoMoldeMedidaTallaS") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS,
+			@ModelAttribute("listadoMoldeMedidaTallaM") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaM,
+			@ModelAttribute("listadoMoldeMedidaTallaL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaL,
+			@ModelAttribute("listadoMoldeMedidaTallaXL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaXL){
+		
+			
+		agregarTalla(listadoMoldeMedidaTallaS, "S",medida,corteS,prendaFinalS);
+		agregarTalla(listadoMoldeMedidaTallaM, "M",medida,corteM,prendaFinalM);
+		agregarTalla(listadoMoldeMedidaTallaL, "M",medida,corteL,prendaFinalL);
+		agregarTalla(listadoMoldeMedidaTallaXL,"XL",medida,corteXL,prendaFinalXL);
+			
+			
+		return "molde/moldemedidas";
+	}
+	
+	@RequestMapping(value="/agregarconfeccion", method = RequestMethod.POST)
+	private String agregarConfeccion(@RequestParam("nombreConfeccion") String nombreConfeccion,
+			@RequestParam("detalleConfeccion") String detalleConfeccion,
+			@ModelAttribute("listaConfeccion") List<MoldeConfeccionListaForm> listaConfeccion){
+		
+		MoldeConfeccionListaForm item = new MoldeConfeccionListaForm();
+		item.setIdMolde(0);
+		item.setNombreConfeccion(nombreConfeccion);
+		item.setDetalleConfeccion(detalleConfeccion);
+		
 
-		return listaConfeccion;
+		int mayor = 0;
+		for(MoldeConfeccionListaForm itemBusqueda : listaConfeccion)
+		{
+			if(itemBusqueda.getIdMoldeConfeccion() > mayor){
+				mayor = itemBusqueda.getIdMoldeConfeccion();
+			}
+		}
+		mayor++;		
+		item.setIdMoldeConfeccion(mayor);
+		
+		listaConfeccion.add(item);
+		
+		return "molde/moldeconfecciones";
 	}
+	
+	private void agregarTalla(List<MoldeMedidaTallaDTO> listaTallas, String tipoTalla, String medida, String corte, String prendaFinal){
+		MoldeMedidaTallaDTO talla = new MoldeMedidaTallaDTO();
+		talla.setIdMolde(0);
+		talla.setIdMoldeMedida(0);
+		//talla.setIdMoldeMedidaTalla(0); //aqui colocar un correlativo
+		talla.setNombreMoldeMedida(medida);
+		talla.setCorte(corte);
+		talla.setPrendaFinal(prendaFinal);
+		talla.setTipoTalla(tipoTalla);
+		
+		int mayor = 0;
+		for(MoldeMedidaTallaDTO item : listaTallas)
+		{
+			if(item.getIdMoldeMedidaTalla() > mayor){
+				mayor = item.getIdMoldeMedidaTalla();
+			}
+		}
+		mayor++;
+		talla.setIdMoldeMedidaTalla(mayor);
+		
+		//log.debug(talla.getIdMoldeMedidaTalla());
+		
+		listaTallas.add(talla);
+		
+	}
+	
+	@RequestMapping(value="/eliminarmedida", method = RequestMethod.POST)
+	private String eliminarMedidas(@RequestParam("idMoldeMedidaTalla") int idMoldeMedidaTalla,
+			@ModelAttribute("listadoMoldeMedidaTallaS") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaS,
+			@ModelAttribute("listadoMoldeMedidaTallaM") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaM,
+			@ModelAttribute("listadoMoldeMedidaTallaL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaL,
+			@ModelAttribute("listadoMoldeMedidaTallaXL") List<MoldeMedidaTallaDTO> listadoMoldeMedidaTallaXL){
+		
+		eliminarTalla(idMoldeMedidaTalla, listadoMoldeMedidaTallaS);
+		eliminarTalla(idMoldeMedidaTalla, listadoMoldeMedidaTallaM);
+		eliminarTalla(idMoldeMedidaTalla, listadoMoldeMedidaTallaL);
+		eliminarTalla(idMoldeMedidaTalla, listadoMoldeMedidaTallaXL);
+			
+		
+		return "molde/moldemedidas";
+	}
+	
+	
+	private void eliminarTalla(int idMoldeMedidaTalla, List<MoldeMedidaTallaDTO> listadoTallas){
+		
+		for(MoldeMedidaTallaDTO medida : listadoTallas){
+			if(medida.getIdMoldeMedidaTalla()==idMoldeMedidaTalla){
+				listadoTallas.remove(medida);
+				break;
+			}
+		}		
+	}
+	
+	@RequestMapping(value="/eliminarconfeccion", method = RequestMethod.POST)
+	private String eliminarConfeccion(@RequestParam("idMoldeConfeccion") int idMoldeConfeccion,
+			@ModelAttribute("listaConfeccion") List<MoldeConfeccionListaForm> listaConfeccion){
+		
+		for(MoldeConfeccionListaForm item : listaConfeccion){
+			if(item.getIdMoldeConfeccion()==idMoldeConfeccion){
+				listaConfeccion.remove(item);
+				break;
+			}
+		}
+		
+		return "molde/moldeconfecciones";
+	}
+	
+	@RequestMapping(value="/moldeavios", method = RequestMethod.POST)
+	private String moldeAvios(Model model){
+		
+		List<Avio> listaAvioDisponible = moldeService.listadoAvio(); 
+		model.addAttribute("listaAvioDisponible",listaAvioDisponible);
+		List<Avio> listaAvioAsignado = new ArrayList<Avio>();
+		model.addAttribute("listaAvioAsignado",listaAvioAsignado);		
+		
+		return "molde/moldeavios";
+	}	
 }
